@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "banner": "",
+  "projects": [
+    {
+      "id": 1,
+      "title": "Thủy điện Sơn La & Thủy điện Lai Châu",
+      "category": "hydro",
+      "categoryLabel": "Thủy điện",
+      "capacity": "2.400 MW & 1.500 MW",
+      "location": "Sơn La & Lai Châu",
+      "scope": "Tư vấn thiết kế kết cấu đập bê tông đầm lăn RCC (đập cao 138m) & tính toán thủy lực công trình.",
+      "year": "2012 – 2016",
+      "image": "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 2,
+      "title": "Thủy điện Đăk Mi 1 & Đăk Mi 1A",
+      "category": "hydro",
+      "categoryLabel": "Thủy điện",
+      "capacity": "84 MW & 11 MW",
+      "location": "Quảng Nam",
+      "scope": "Tư vấn thiết kế kỹ thuật đập bê tông CVC cao 80m, tuyến năng lượng và trạm biến áp đấu nối.",
+      "year": "2020",
+      "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 3,
+      "title": "Nhà máy Điện mặt trời Cư Kbang",
+      "category": "solar",
+      "categoryLabel": "Điện mặt trời",
+      "capacity": "800 MWp",
+      "location": "Đắk Lắk (Tây Nguyên)",
+      "scope": "Lập hồ sơ bổ sung quy hoạch phát triển điện lực và Báo cáo nghiên cứu khả thi (FS).",
+      "year": "2020",
+      "image": "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 4,
+      "title": "Điện mặt trời Đắk Bla 1 & Chư Gu - Krông Pa",
+      "category": "solar",
+      "categoryLabel": "Điện mặt trời",
+      "capacity": "60 MW & 49 MWp",
+      "location": "Kon Tum & Gia Lai",
+      "scope": "Bổ sung quy hoạch, lập dự án đầu tư, thiết kế kỹ thuật và thỏa thuận đấu nối lưới điện 110kV.",
+      "year": "2020",
+      "image": "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 5,
+      "title": "Nhà máy Điện gió HNN & Điện gió HBoong",
+      "category": "wind",
+      "categoryLabel": "Điện gió",
+      "capacity": "63 MW & 50 MW",
+      "location": "Gia Lai (Tây Nguyên)",
+      "scope": "Khảo sát đo gió, lập hồ sơ bổ sung quy hoạch và Báo cáo nghiên cứu khả thi (FS) dự án điện gió.",
+      "year": "2021",
+      "image": "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 6,
+      "title": "Hệ thống Rơ-le bảo vệ & SCADA TBA 110kV Nhà máy điện",
+      "category": "scada",
+      "categoryLabel": "Rơ-le & SCADA 110kV",
+      "capacity": "Cấp điện áp 110kV",
+      "location": "Tây Nguyên & Miền Bắc",
+      "scope": "Cung cấp thiết bị, thiết kế thỏa thuận rơ-le, ghép nối SCADA về A0/Ax, đào tạo vận hành & lập phương thức đóng điện.",
+      "year": "2023 – 2026",
+      "image": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 7,
+      "title": "Nhà máy Điện rác Hưng Lâm",
+      "category": "biomass",
+      "categoryLabel": "Điện sinh khối / Rác",
+      "capacity": "12 MW",
+      "location": "Việt Nam",
+      "scope": "Tư vấn thiết kế công nghệ đốt rác phát điện, đánh giá tác động môi trường và đấu nối lưới điện.",
+      "year": "2020",
+      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 8,
+      "title": "Thủy điện Luông Pha Băng (CHDCND Lào)",
+      "category": "hydro",
+      "categoryLabel": "Thủy điện",
+      "capacity": "1.500 MW",
+      "location": "Luang Prabang, Lào",
+      "scope": "Tham gia tư vấn thiết kế đập bê tông đầm lăn RCC và giải pháp thủy công quy mô quốc tế.",
+      "year": "2019",
+      "image": "https://images.unsplash.com/photo-1548337138-e87d889cc369?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "news": [
+    {
+      "id": 101,
+      "title": "IPCEC hoàn thành thí nghiệm hợp bộ Rơ-le bảo vệ & ghép nối SCADA 110kV phục vụ đóng điện hòa lưới",
+      "tag": "Giải pháp SCADA 110kV",
+      "date": "15/10/2026",
+      "summary": "Đội ngũ kỹ sư tự động hóa IPCEC đã hoàn tất công tác thỏa thuận rơ-le, đăng ký đánh số thiết bị, bồi huấn vận hành và nghiệm thu tín hiệu SCADA chuẩn IEC 61850.",
+      "image": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 102,
+      "title": "Lưu ý kỹ thuật khi lập phương thức đóng điện & Quy trình phối hợp vận hành nhà máy điện đấu nối 110kV",
+      "tag": "Chính sách & Kỹ thuật",
+      "date": "28/09/2026",
+      "summary": "Tổng hợp các yêu cầu mới nhất của Trung tâm Điều độ Hệ thống điện về hồ sơ rơ-le bảo vệ, thử nghiệm AGC/SCADA và cấp chứng nhận chức danh vận hành.",
+      "image": "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": 103,
+      "title": "Năng lực thiết kế Hạng I của IPCEC trong tối ưu hóa kết cấu đập và tuyến năng lượng thủy điện",
+      "tag": "Năng lực IPCEC",
+      "date": "10/09/2026",
+      "summary": "Với chứng chỉ năng lực hoạt động xây dựng Hạng I số BXD-00015299, IPCEC mang đến giải pháp tối ưu suất đầu tư cho các công trình thủy điện vừa và nhỏ.",
+      "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80"
+    }
+  ]
+}

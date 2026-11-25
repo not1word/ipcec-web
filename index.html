@@ -78,23 +78,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden pb-20 lg:pb-0">
 
-    <!-- ==================== ADMIN ACTIVE MANAGEMENT BAR (VISIBLE ONLY WHEN LOGGED IN) ==================== -->
-    <div id="admin-active-bar" class="hidden sticky top-0 z-50 bg-red-900 text-white text-xs py-2 px-4 border-b border-red-400 shadow-md">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <div class="font-bold flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block animate-pulse"></span>
-                QUẢN TRỊ HỆ THỐNG IPCEC (ADMIN CMS)
-            </div>
-            <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openAdminCMS('projects')" class="px-2.5 py-1.5 rounded-lg bg-amber-500 text-navy-950 font-bold hover:bg-amber-400">+ Quản lý Dự án / Tin tức</button>
-                <button onclick="openAdminCMS('banner')" class="px-2.5 py-1.5 rounded-lg bg-energy-600 text-white font-semibold hover:bg-energy-500">Đổi ảnh Banner</button>
-                <button onclick="openAdminCMS('security')" class="px-2.5 py-1.5 rounded-lg bg-navy-900 text-white font-semibold hover:bg-navy-800">Đổi mật khẩu</button>
-                <button onclick="exportPackagedHTML()" class="px-2.5 py-1.5 rounded-lg bg-teal-600 text-white font-semibold hover:bg-teal-500">Xuất bản index.html</button>
-                <button onclick="logoutAdmin()" class="px-2.5 py-1.5 rounded-lg bg-red-600 text-white font-bold hover:bg-red-500">Đăng xuất</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ==================== TOP CORPORATE INFO BAR ==================== -->
     <div class="hidden lg:block bg-navy-950 text-slate-300 text-xs py-2 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 flex items-center justify-between gap-4">
@@ -157,7 +140,6 @@
             <div class="flex items-center gap-2">
                 <button onclick="toggleLanguage()" id="lang-toggle-btn" class="px-2.5 py-2 rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 text-xs font-extrabold text-navy-900">VN | EN</button>
                 <button onclick="openProfileModal()" class="hidden md:inline-flex px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-navy-950 text-xs font-bold shadow-sm" data-i18n="btnProfile">Hồ sơ năng lực</button>
-                <button onclick="handleAdminButtonClick()" id="header-admin-btn" class="px-3 py-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-white text-xs font-bold">Admin CMS</button>
                 <button onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg border border-slate-300 text-navy-900" aria-label="Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
@@ -596,7 +578,7 @@
             </div>
             <div class="pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
                 <span>© 2009–2026 IPCEC., JSC (https://icec.vn). Bản quyền thuộc Công ty CP Tư vấn Xây dựng Điện và Môi trường Quốc tế.</span>
-                <button onclick="handleAdminButtonClick()" class="underline hover:text-white">Quản trị hệ thống (Admin CMS)</button>
+                
             </div>
         </div>
     </footer>
@@ -660,178 +642,6 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL: ADMIN LOGIN (PRODUCTION SECURE - NO DEMO BYPASS) ==================== -->
-    <div id="admin-login-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
-                <h3 class="text-lg font-extrabold text-navy-900">Đăng nhập Admin CMS</h3>
-                <button onclick="closeModal('admin-login-modal')" class="px-2.5 py-1 rounded-lg border border-slate-300 text-xs font-bold">Đóng</button>
-            </div>
-            <p class="text-xs text-slate-500 mb-3">Khu vực dành riêng cho quản trị viên website IPCEC (icec.vn).</p>
-            <form onsubmit="submitAdminLogin(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-navy-900 mb-1">Mật khẩu quản trị *</label>
-                    <input type="password" id="admin-pwd-input" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" placeholder="Nhập mật khẩu quản trị...">
-                </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm">Đăng nhập hệ thống</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ==================== MODAL: ADMIN CMS DASHBOARD ==================== -->
-    <div id="admin-cms-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto p-5 sm:p-6 shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
-                <div>
-                    <h3 class="text-lg sm:text-xl font-extrabold text-navy-900">Hệ quản trị nội dung Website IPCEC (Admin CMS)</h3>
-                    <p class="text-xs text-slate-500">Quản lý dự án, tin tức, ảnh banner, đổi mật khẩu và xuất bản tệp HTML.</p>
-                </div>
-                <button onclick="closeModal('admin-cms-modal')" class="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">Đóng</button>
-            </div>
-
-            <!-- CMS Tabs -->
-            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 border-b border-slate-100">
-                <button id="cms-tab-btn-projects" onclick="switchCmsTab('projects')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-navy-900 text-white whitespace-nowrap">1. Quản lý Dự án</button>
-                <button id="cms-tab-btn-news" onclick="switchCmsTab('news')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 whitespace-nowrap">2. Quản lý Tin tức</button>
-                <button id="cms-tab-btn-banner" onclick="switchCmsTab('banner')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 whitespace-nowrap">3. Đổi ảnh Hero Banner</button>
-                <button id="cms-tab-btn-security" onclick="switchCmsTab('security')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 whitespace-nowrap">4. Bảo mật &amp; Đổi mật khẩu</button>
-                <button id="cms-tab-btn-export" onclick="switchCmsTab('export')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 whitespace-nowrap">5. Xuất bản Hosting (.html)</button>
-            </div>
-
-            <!-- Pane 1: Projects -->
-            <div id="cms-pane-projects">
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-5">
-                    <h4 id="proj-form-heading" class="font-bold text-navy-900 text-sm mb-3">+ Thêm / Cập nhật Dự án tiêu biểu</h4>
-                    <input type="hidden" id="edit-proj-id">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Tên dự án *</label>
-                            <input type="text" id="cms-proj-title" class="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="VD: Thủy điện Đăk Mi 1">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Loại hình năng lượng</label>
-                            <select id="cms-proj-cat" class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white">
-                                <option value="hydro">Thủy điện</option>
-                                <option value="solar">Điện mặt trời</option>
-                                <option value="wind">Điện gió</option>
-                                <option value="biomass">Điện sinh khối / Rác</option>
-                                <option value="scada">Rơ-le &amp; SCADA 110kV</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Công suất / Cấp điện áp *</label>
-                            <input type="text" id="cms-proj-cap" class="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="VD: 84 MW">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Địa điểm thực hiện *</label>
-                            <input type="text" id="cms-proj-loc" class="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="VD: Quảng Nam / Gia Lai">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Phạm vi công việc IPCEC</label>
-                            <input type="text" id="cms-proj-scope" class="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="VD: Lập FS, Thiết kế kỹ thuật, SCADA 110kV">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Tải ảnh từ máy tính hoặc dán URL ảnh</label>
-                            <div class="flex gap-2">
-                                <input type="file" id="cms-proj-file" accept="image/*" class="w-1/2 text-xs py-1.5" onchange="previewLocalUpload(this, 'proj')">
-                                <input type="text" id="cms-proj-url" class="w-1/2 px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs" placeholder="Hoặc dán URL ảnh...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-2 mt-3">
-                        <button onclick="saveProjectFromCms()" class="px-4 py-2 rounded-lg bg-navy-900 text-white text-xs font-bold">Lưu Dự án</button>
-                        <button onclick="resetProjectForm()" class="px-4 py-2 rounded-lg border border-slate-300 text-xs font-bold">Làm mới</button>
-                    </div>
-                </div>
-                <div id="cms-projects-list" class="space-y-2"></div>
-            </div>
-
-            <!-- Pane 2: News -->
-            <div id="cms-pane-news" class="hidden">
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-5">
-                    <h4 class="font-bold text-navy-900 text-sm mb-3">+ Đăng bài viết / Tin tức mới</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-3">
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Tiêu đề bài viết *</label>
-                            <input type="text" id="cms-news-title" class="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="Nhập tiêu đề bài viết...">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Chuyên mục</label>
-                            <input type="text" id="cms-news-tag" class="w-full px-3 py-2 rounded-lg border border-slate-300" value="Hoạt động IPCEC">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold text-navy-900 mb-1">Nội dung tóm tắt &amp; Chi tiết *</label>
-                        <textarea id="cms-news-content" rows="3" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Nhập nội dung bài viết..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold text-navy-900 mb-1">Tải ảnh từ máy tính hoặc dán URL ảnh</label>
-                        <div class="flex gap-2">
-                            <input type="file" id="cms-news-file" accept="image/*" class="w-1/2 text-xs py-1.5" onchange="previewLocalUpload(this, 'news')">
-                            <input type="text" id="cms-news-url" class="w-1/2 px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs" placeholder="Hoặc dán URL ảnh...">
-                        </div>
-                    </div>
-                    <button onclick="saveNewsFromCms()" class="px-4 py-2 rounded-lg bg-navy-900 text-white text-xs font-bold">Đăng bài viết</button>
-                </div>
-                <div id="cms-news-list" class="space-y-2"></div>
-            </div>
-
-            <!-- Pane 3: Hero Banner -->
-            <div id="cms-pane-banner" class="hidden">
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 max-w-lg space-y-3">
-                    <h4 class="font-bold text-navy-900 text-sm">Thay đổi ảnh bìa Trang chủ (Hero Banner)</h4>
-                    <div>
-                        <label class="block text-xs font-bold text-navy-900 mb-1">Chọn ảnh trực tiếp từ máy tính / điện thoại</label>
-                        <input type="file" accept="image/*" class="w-full text-xs" onchange="updateHeroBannerFromFile(this)">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-navy-900 mb-1">Hoặc dán đường dẫn (URL) ảnh công trình</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="cms-banner-url" class="flex-1 px-3 py-2 rounded-lg border border-slate-300 text-xs" placeholder="https://...">
-                            <button onclick="updateHeroBannerFromUrl()" class="px-4 py-2 rounded-lg bg-navy-900 text-white text-xs font-bold">Áp dụng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pane 4: Security & Password -->
-            <div id="cms-pane-security" class="hidden">
-                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 max-w-md">
-                    <h4 class="font-bold text-navy-900 text-base mb-3">Đổi mật khẩu Quản trị Admin</h4>
-                    <form onsubmit="changeAdminPassword(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Mật khẩu hiện tại *</label>
-                            <input type="password" id="pwd-old" required class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Nhập mật khẩu hiện tại">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Mật khẩu mới (tối thiểu 6 ký tự) *</label>
-                            <input type="password" id="pwd-new" required minlength="6" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Nhập mật khẩu mới">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-navy-900 mb-1">Xác nhận mật khẩu mới *</label>
-                            <input type="password" id="pwd-confirm" required minlength="6" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Nhập lại mật khẩu mới">
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <button type="submit" class="px-4 py-2 rounded-lg bg-navy-900 text-white text-xs font-bold">Cập nhật mật khẩu</button>
-                            <button type="button" onclick="resetDefaultPassword()" class="px-4 py-2 rounded-lg border border-slate-300 text-xs font-bold">Khôi phục mặc định (ipcec2026)</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Pane 5: Production Export -->
-            <div id="cms-pane-export" class="hidden">
-                <div class="p-5 rounded-xl border border-teal-300 bg-teal-50 max-w-xl">
-                    <h4 class="font-bold text-navy-900 text-base mb-1.5">Xuất bản tệp index.html lên Hosting chính thức (icec.vn)</h4>
-                    <p class="text-xs sm:text-sm text-slate-700 mb-4">
-                        Hệ thống sẽ tự động đóng gói toàn bộ bài viết, dự án, hình ảnh và mật khẩu quản trị mới nhất thành một tệp <strong>index.html</strong> duy nhất để tải lên thư mục gốc của máy chủ <strong>https://icec.vn</strong>.
-                    </p>
-                    <button onclick="exportPackagedHTML()" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs sm:text-sm font-bold shadow">Tải xuống tệp index.html chính thức</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- ==================== TOAST MESSAGE BOX ==================== -->
     <div id="toast-box" class="hidden fixed bottom-20 lg:bottom-6 right-4 left-4 sm:left-auto sm:max-w-md z-50 bg-navy-900 text-white p-4 rounded-xl border-l-4 border-teal-500 shadow-2xl">
         <div id="toast-title" class="font-extrabold text-sm text-amber-400"></div>
@@ -840,7 +650,6 @@
 
     <!-- ==================== CLEAN & SELF-CONTAINED APPLICATION SCRIPT ==================== -->
     <script>
-        const defaultAdminPassword = "ipcec2026";
 
         /* Instant Local SVG Fallback Images */
         const FALLBACK_IMAGES = {
@@ -1045,47 +854,29 @@
             }
         };
 
-        const STORAGE_KEYS = {
-            PROJECTS: "ipcec_prod_projects_v1",
-            NEWS: "ipcec_prod_news_v1",
-            BANNER: "ipcec_prod_banner_v1",
-            PWD: "ipcec_prod_admin_pwd_v1",
-            AUTH: "ipcec_prod_admin_auth_v1"
-        };
-
         let currentLang = "vi";
         let currentFilter = "all";
-        let isAdminLoggedIn = false;
-        let projectsData = [];
+                let projectsData = [];
         let newsData = [];
         let uploadedProjImage = "";
         let uploadedNewsImage = "";
 
-        function loadAppData() {
+        const DATA_URL = "data.json";
+        let bannerData = "";
+        function esc(v) { return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+        async function loadAppData() {
+            let d = null;
             try {
-                const sp = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-                projectsData = sp ? JSON.parse(sp) : JSON.parse(JSON.stringify(defaultProjectsData));
-            } catch (e) { projectsData = JSON.parse(JSON.stringify(defaultProjectsData)); }
-
-            try {
-                const sn = localStorage.getItem(STORAGE_KEYS.NEWS);
-                newsData = sn ? JSON.parse(sn) : JSON.parse(JSON.stringify(defaultNewsData));
-            } catch (e) { newsData = JSON.parse(JSON.stringify(defaultNewsData)); }
-
-            try {
-                const sb = localStorage.getItem(STORAGE_KEYS.BANNER);
-                if (sb) document.getElementById("hero-banner-img").src = sb;
+                const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
+                if (r.ok) d = await r.json();
             } catch (e) {}
+            /*DRAFT*/
+            projectsData = (d && d.projects) || JSON.parse(JSON.stringify(defaultProjectsData));
+            newsData = (d && d.news) || JSON.parse(JSON.stringify(defaultNewsData));
+            bannerData = (d && d.banner) || "";
+            if (bannerData) document.getElementById("hero-banner-img").src = bannerData;
+            renderProjects(); renderNews();
         }
-
-        function saveProjects() {
-            try { localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projectsData)); } catch (e) {}
-        }
-
-        function saveNews() {
-            try { localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData)); } catch (e) {}
-        }
-
         function navigateTo(sectionId) {
             document.querySelectorAll(".nav-link").forEach(el => {
                 const active = el.getAttribute("data-nav") === sectionId;
@@ -1136,23 +927,20 @@
                 return `
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
                     <div class="relative h-48 bg-navy-900 overflow-hidden">
-                        <img src="${proj.image || fallback}" onerror="this.onerror=null; this.src='${fallback}';" alt="${proj.title}" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-amber-500 text-navy-950 text-xs font-extrabold shadow">${proj.categoryLabel}</span>
+                        <img src="${proj.image || fallback}" onerror="this.onerror=null; this.src='${fallback}';" alt="${esc(proj.title)}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-amber-500 text-navy-950 text-xs font-extrabold shadow">${esc(proj.categoryLabel)}</span>
                     </div>
                     <div class="p-5 flex-1 flex flex-col">
-                        <h3 class="font-bold text-navy-900 text-base mb-1.5">${proj.title}</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 flex-1">${proj.scope}</p>
+                        <h3 class="font-bold text-navy-900 text-base mb-1.5">${esc(proj.title)}</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 flex-1">${esc(proj.scope)}</p>
                         <div class="mt-3 pt-3 border-t border-dashed border-slate-200 text-xs space-y-1.5">
-                            <div class="flex justify-between gap-2"><span class="text-slate-500">Công suất / Cấp ĐA:</span><span class="font-bold text-navy-900 text-right">${proj.capacity}</span></div>
-                            <div class="flex justify-between gap-2"><span class="text-slate-500">Địa điểm:</span><span class="font-bold text-navy-900 text-right">${proj.location}</span></div>
+                            <div class="flex justify-between gap-2"><span class="text-slate-500">Công suất / Cấp ĐA:</span><span class="font-bold text-navy-900 text-right">${esc(proj.capacity)}</span></div>
+                            <div class="flex justify-between gap-2"><span class="text-slate-500">Địa điểm:</span><span class="font-bold text-navy-900 text-right">${esc(proj.location)}</span></div>
                             <div class="flex justify-between gap-2"><span class="text-slate-500">Giai đoạn:</span><span class="font-bold text-navy-900 text-right">${proj.year || "Hoàn thành"}</span></div>
                         </div>
                         <div class="flex gap-2 mt-4">
                             <button onclick="openProjectDetail(${proj.id})" class="flex-1 py-2 px-3 rounded-xl border border-slate-300 hover:border-navy-900 text-navy-900 text-xs font-bold">Xem thông số</button>
-                            ${isAdminLoggedIn ? `
-                                <button onclick="editProjectInCms(${proj.id})" class="py-2 px-3 rounded-xl bg-amber-500 text-navy-950 text-xs font-bold">Sửa</button>
-                                <button onclick="deleteProject(${proj.id})" class="py-2 px-3 rounded-xl bg-red-600 text-white text-xs font-bold">Xóa</button>
-                            ` : ""}
+                            
                         </div>
                     </div>
                 </div>`;
@@ -1165,15 +953,15 @@
             const fallback = FALLBACK_IMAGES[proj.category] || FALLBACK_IMAGES.hydro;
             document.getElementById("detail-modal-title").textContent = proj.title;
             document.getElementById("detail-modal-body").innerHTML = `
-                <img src="${proj.image || fallback}" onerror="this.onerror=null; this.src='${fallback}';" alt="${proj.title}" class="w-full max-h-64 object-cover rounded-xl mb-4">
+                <img src="${proj.image || fallback}" onerror="this.onerror=null; this.src='${fallback}';" alt="${esc(proj.title)}" class="w-full max-h-64 object-cover rounded-xl mb-4">
                 <div class="divide-y divide-slate-100 text-sm mb-4">
-                    <div class="py-2 flex justify-between"><span class="text-slate-500">Lĩnh vực:</span><span class="font-bold text-navy-900">${proj.categoryLabel}</span></div>
-                    <div class="py-2 flex justify-between"><span class="text-slate-500">Công suất / Quy mô:</span><span class="font-bold text-navy-900">${proj.capacity}</span></div>
-                    <div class="py-2 flex justify-between"><span class="text-slate-500">Địa điểm:</span><span class="font-bold text-navy-900">${proj.location}</span></div>
+                    <div class="py-2 flex justify-between"><span class="text-slate-500">Lĩnh vực:</span><span class="font-bold text-navy-900">${esc(proj.categoryLabel)}</span></div>
+                    <div class="py-2 flex justify-between"><span class="text-slate-500">Công suất / Quy mô:</span><span class="font-bold text-navy-900">${esc(proj.capacity)}</span></div>
+                    <div class="py-2 flex justify-between"><span class="text-slate-500">Địa điểm:</span><span class="font-bold text-navy-900">${esc(proj.location)}</span></div>
                     <div class="py-2 flex justify-between"><span class="text-slate-500">Thời gian:</span><span class="font-bold text-navy-900">${proj.year || "Đã triển khai"}</span></div>
                 </div>
                 <div class="p-3.5 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-700 mb-4">
-                    <strong>Phạm vi dịch vụ IPCEC đảm nhận:</strong><br>${proj.scope}
+                    <strong>Phạm vi dịch vụ IPCEC đảm nhận:</strong><br>${esc(proj.scope)}
                 </div>
                 <div class="flex justify-end">
                     <a href="#contact" onclick="closeModal('detail-modal'); navigateTo('contact')" class="px-4 py-2.5 rounded-xl bg-amber-500 text-navy-950 font-bold text-xs">Tư vấn dự án tương tự</a>
@@ -1187,18 +975,18 @@
             grid.innerHTML = newsData.map(item => `
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
                     <div class="h-44 bg-navy-900 overflow-hidden">
-                        <img src="${item.image || FALLBACK_IMAGES.scada}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGES.scada}';" alt="${item.title}" class="w-full h-full object-cover">
+                        <img src="${item.image || FALLBACK_IMAGES.scada}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGES.scada}';" alt="${esc(item.title)}" class="w-full h-full object-cover">
                     </div>
                     <div class="p-5 flex-1 flex flex-col">
                         <div class="flex items-center justify-between gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[11px] font-bold">${item.tag}</span>
-                            <span class="text-[11px] text-slate-500">${item.date}</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[11px] font-bold">${esc(item.tag)}</span>
+                            <span class="text-[11px] text-slate-500">${esc(item.date)}</span>
                         </div>
-                        <h3 class="font-bold text-navy-900 text-base mb-2">${item.title}</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 flex-1">${item.summary}</p>
+                        <h3 class="font-bold text-navy-900 text-base mb-2">${esc(item.title)}</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 flex-1">${esc(item.summary)}</p>
                         <div class="flex gap-2 mt-4">
                             <button onclick="openNewsDetail(${item.id})" class="flex-1 py-2 px-3 rounded-xl border border-slate-300 hover:border-navy-900 text-navy-900 text-xs font-bold">Đọc chi tiết</button>
-                            ${isAdminLoggedIn ? `<button onclick="deleteNews(${item.id})" class="py-2 px-3 rounded-xl bg-red-600 text-white text-xs font-bold">Xóa</button>` : ""}
+                            
                         </div>
                     </div>
                 </div>
@@ -1210,9 +998,9 @@
             if (!item) return;
             document.getElementById("detail-modal-title").textContent = item.title;
             document.getElementById("detail-modal-body").innerHTML = `
-                <div class="text-xs text-slate-500 mb-3">Chuyên mục: <strong>${item.tag}</strong> • Ngày đăng: ${item.date}</div>
-                <img src="${item.image || FALLBACK_IMAGES.scada}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGES.scada}';" alt="${item.title}" class="w-full max-h-60 object-cover rounded-xl mb-4">
-                <p class="text-sm text-slate-700 leading-relaxed">${item.summary}</p>
+                <div class="text-xs text-slate-500 mb-3">Chuyên mục: <strong>${esc(item.tag)}</strong> • Ngày đăng: ${esc(item.date)}</div>
+                <img src="${item.image || FALLBACK_IMAGES.scada}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGES.scada}';" alt="${esc(item.title)}" class="w-full max-h-60 object-cover rounded-xl mb-4">
+                <p class="text-sm text-slate-700 leading-relaxed">${esc(item.summary)}</p>
             `;
             document.getElementById("detail-modal").classList.remove("hidden");
         }
@@ -1294,299 +1082,6 @@
             showToast("Đã ghi nhận yêu cầu tư vấn!", `Cảm ơn ${name}. IPCEC sẽ phản hồi trong thời gian sớm nhất.`);
         }
 
-        /* Secure Production Admin CMS Functions */
-        function getActivePassword() {
-            try { return localStorage.getItem(STORAGE_KEYS.PWD) || defaultAdminPassword; } catch (e) { return defaultAdminPassword; }
-        }
-
-        function handleAdminButtonClick() {
-            if (isAdminLoggedIn) openAdminCMS("projects");
-            else {
-                document.getElementById("admin-pwd-input").value = "";
-                document.getElementById("admin-login-modal").classList.remove("hidden");
-            }
-        }
-
-        function submitAdminLogin(e) {
-            e.preventDefault();
-            const pwd = document.getElementById("admin-pwd-input").value;
-            if (pwd === getActivePassword()) {
-                isAdminLoggedIn = true;
-                try { sessionStorage.setItem(STORAGE_KEYS.AUTH, "true"); } catch (err) {}
-                closeModal("admin-login-modal");
-                updateAdminState();
-                openAdminCMS("projects");
-                showToast("Đăng nhập quản trị thành công!", "Chào mừng quản trị viên IPCEC.");
-            } else {
-                showToast("Mật khẩu không chính xác!", "Vui lòng kiểm tra lại mật khẩu quản trị.");
-            }
-        }
-
-        function logoutAdmin() {
-            isAdminLoggedIn = false;
-            try { sessionStorage.removeItem(STORAGE_KEYS.AUTH); } catch (err) {}
-            updateAdminState();
-            showToast("Đã đăng xuất Admin CMS", "Giao diện đã trở về chế độ hiển thị công khai.");
-        }
-
-        function updateAdminState() {
-            const bar = document.getElementById("admin-active-bar");
-            const btn = document.getElementById("header-admin-btn");
-            if (isAdminLoggedIn) {
-                bar.classList.remove("hidden");
-                btn.textContent = "Mở CMS";
-                btn.className = "px-3 py-2 rounded-lg bg-amber-500 text-navy-950 text-xs font-extrabold";
-            } else {
-                bar.classList.add("hidden");
-                btn.textContent = "Admin CMS";
-                btn.className = "px-3 py-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-white text-xs font-bold";
-            }
-            renderProjects();
-            renderNews();
-        }
-
-        function openAdminCMS(tab) {
-            if (!isAdminLoggedIn) {
-                handleAdminButtonClick();
-                return;
-            }
-            switchCmsTab(tab || "projects");
-            renderCmsLists();
-            document.getElementById("admin-cms-modal").classList.remove("hidden");
-        }
-
-        function switchCmsTab(tab) {
-            ["projects", "news", "banner", "security", "export"].forEach(t => {
-                document.getElementById("cms-pane-" + t).classList.toggle("hidden", t !== tab);
-                const b = document.getElementById("cms-tab-btn-" + t);
-                b.className = t === tab
-                    ? "px-3.5 py-2 rounded-xl text-xs font-bold bg-navy-900 text-white whitespace-nowrap"
-                    : "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 whitespace-nowrap";
-            });
-        }
-
-        function previewLocalUpload(input, target) {
-            if (!input.files || !input.files[0]) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                if (target === "proj") uploadedProjImage = ev.target.result;
-                if (target === "news") uploadedNewsImage = ev.target.result;
-                showToast("Đã tải ảnh từ thiết bị!", "Ảnh sẽ được lưu khi bấm nút Lưu.");
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        function saveProjectFromCms() {
-            const editId = document.getElementById("edit-proj-id").value;
-            const title = document.getElementById("cms-proj-title").value.trim();
-            const category = document.getElementById("cms-proj-cat").value;
-            const capacity = document.getElementById("cms-proj-cap").value.trim();
-            const location = document.getElementById("cms-proj-loc").value.trim();
-            const scope = document.getElementById("cms-proj-scope").value.trim() || "Tư vấn thiết kế & Giải pháp kỹ thuật đồng bộ.";
-            const urlImg = document.getElementById("cms-proj-url").value.trim();
-
-            if (!title || !capacity || !location) {
-                showToast("Thiếu thông tin bắt buộc", "Vui lòng nhập Tên dự án, Công suất và Địa điểm.");
-                return;
-            }
-            const catLabels = { hydro: "Thủy điện", solar: "Điện mặt trời", wind: "Điện gió", biomass: "Điện sinh khối / Rác", scada: "Rơ-le & SCADA 110kV" };
-            const chosenImg = uploadedProjImage || urlImg;
-
-            if (editId) {
-                const idx = projectsData.findIndex(p => p.id === Number(editId));
-                if (idx !== -1) {
-                    projectsData[idx] = {
-                        ...projectsData[idx],
-                        title, category, categoryLabel: catLabels[category], capacity, location, scope,
-                        image: chosenImg || projectsData[idx].image
-                    };
-                }
-            } else {
-                projectsData.unshift({
-                    id: Date.now(),
-                    title, category, categoryLabel: catLabels[category], capacity, location, scope,
-                    year: "2026",
-                    image: chosenImg || FALLBACK_IMAGES[category] || FALLBACK_IMAGES.hydro
-                });
-            }
-            saveProjects();
-            resetProjectForm();
-            renderProjects();
-            renderCmsLists();
-            showToast("Đã lưu dự án thành công!", "Danh sách dự án đã được cập nhật.");
-        }
-
-        function editProjectInCms(id) {
-            const p = projectsData.find(x => x.id === id);
-            if (!p) return;
-            openAdminCMS("projects");
-            document.getElementById("edit-proj-id").value = p.id;
-            document.getElementById("cms-proj-title").value = p.title;
-            document.getElementById("cms-proj-cat").value = p.category;
-            document.getElementById("cms-proj-cap").value = p.capacity;
-            document.getElementById("cms-proj-loc").value = p.location;
-            document.getElementById("cms-proj-scope").value = p.scope;
-            document.getElementById("proj-form-heading").textContent = "Chỉnh sửa Dự án: " + p.title;
-        }
-
-        function resetProjectForm() {
-            document.getElementById("edit-proj-id").value = "";
-            document.getElementById("cms-proj-title").value = "";
-            document.getElementById("cms-proj-cap").value = "";
-            document.getElementById("cms-proj-loc").value = "";
-            document.getElementById("cms-proj-scope").value = "";
-            document.getElementById("cms-proj-file").value = "";
-            document.getElementById("cms-proj-url").value = "";
-            document.getElementById("proj-form-heading").textContent = "+ Thêm / Cập nhật Dự án tiêu biểu";
-            uploadedProjImage = "";
-        }
-
-        function deleteProject(id) {
-            projectsData = projectsData.filter(p => p.id !== id);
-            saveProjects();
-            renderProjects();
-            renderCmsLists();
-            showToast("Đã xóa dự án", "Dự án đã được gỡ khỏi danh sách hiển thị.");
-        }
-
-        function saveNewsFromCms() {
-            const title = document.getElementById("cms-news-title").value.trim();
-            const tag = document.getElementById("cms-news-tag").value.trim() || "Hoạt động IPCEC";
-            const summary = document.getElementById("cms-news-content").value.trim();
-            const urlImg = document.getElementById("cms-news-url").value.trim();
-
-            if (!title || !summary) {
-                showToast("Thiếu thông tin bài viết", "Vui lòng nhập Tiêu đề và Nội dung.");
-                return;
-            }
-            newsData.unshift({
-                id: Date.now(),
-                title, tag, date: new Date().toLocaleDateString("vi-VN"), summary,
-                image: uploadedNewsImage || urlImg || FALLBACK_IMAGES.scada
-            });
-            saveNews();
-            document.getElementById("cms-news-title").value = "";
-            document.getElementById("cms-news-content").value = "";
-            document.getElementById("cms-news-file").value = "";
-            document.getElementById("cms-news-url").value = "";
-            uploadedNewsImage = "";
-            renderNews();
-            renderCmsLists();
-            showToast("Đã đăng bài viết mới!", "Bài viết đã hiển thị trên mục Tin tức.");
-        }
-
-        function deleteNews(id) {
-            newsData = newsData.filter(n => n.id !== id);
-            saveNews();
-            renderNews();
-            renderCmsLists();
-            showToast("Đã xóa bài viết", "Bài viết đã được gỡ bỏ.");
-        }
-
-        function updateHeroBannerFromFile(input) {
-            if (!input.files || !input.files[0]) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById("hero-banner-img").src = ev.target.result;
-                try { localStorage.setItem(STORAGE_KEYS.BANNER, ev.target.result); } catch (e) {}
-                showToast("Đã cập nhật ảnh Hero Banner!", "Ảnh bìa trang chủ đã được thay mới.");
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        function updateHeroBannerFromUrl() {
-            const url = document.getElementById("cms-banner-url").value.trim();
-            if (!url) return;
-            document.getElementById("hero-banner-img").src = url;
-            try { localStorage.setItem(STORAGE_KEYS.BANNER, url); } catch (e) {}
-            showToast("Đã cập nhật ảnh Hero Banner!", "Ảnh bìa trang chủ đã được thay mới.");
-        }
-
-        function renderCmsLists() {
-            document.getElementById("cms-projects-list").innerHTML = projectsData.map(p => `
-                <div class="flex items-center justify-between gap-2 p-3 rounded-xl bg-white border border-slate-200">
-                    <div>
-                        <div class="font-bold text-navy-900 text-xs sm:text-sm">${p.title}</div>
-                        <div class="text-[11px] text-slate-500">${p.categoryLabel} • ${p.capacity} • ${p.location}</div>
-                    </div>
-                    <div class="flex gap-1.5 shrink-0">
-                        <button onclick="editProjectInCms(${p.id})" class="px-2.5 py-1 rounded-lg bg-amber-500 text-navy-950 text-xs font-bold">Sửa</button>
-                        <button onclick="deleteProject(${p.id})" class="px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-bold">Xóa</button>
-                    </div>
-                </div>
-            `).join("");
-
-            document.getElementById("cms-news-list").innerHTML = newsData.map(n => `
-                <div class="flex items-center justify-between gap-2 p-3 rounded-xl bg-white border border-slate-200">
-                    <div>
-                        <div class="font-bold text-navy-900 text-xs sm:text-sm">${n.title}</div>
-                        <div class="text-[11px] text-slate-500">${n.tag} • ${n.date}</div>
-                    </div>
-                    <button onclick="deleteNews(${n.id})" class="px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-bold shrink-0">Xóa</button>
-                </div>
-            `).join("");
-        }
-
-        function changeAdminPassword(e) {
-            e.preventDefault();
-            const oldP = document.getElementById("pwd-old").value;
-            const newP = document.getElementById("pwd-new").value;
-            const confP = document.getElementById("pwd-confirm").value;
-            if (oldP !== getActivePassword()) {
-                showToast("Mật khẩu cũ không chính xác!", "Vui lòng kiểm tra lại.");
-                return;
-            }
-            if (newP !== confP) {
-                showToast("Xác nhận mật khẩu không khớp!", "Vui lòng nhập lại mật khẩu mới.");
-                return;
-            }
-            try { localStorage.setItem(STORAGE_KEYS.PWD, newP); } catch (err) {}
-            e.target.reset();
-            showToast("Đổi mật khẩu thành công!", "Mật khẩu mới sẽ được tự động nhúng khi xuất bản index.html.");
-        }
-
-        function resetDefaultPassword() {
-            try { localStorage.setItem(STORAGE_KEYS.PWD, "ipcec2026"); } catch (err) {}
-            showToast("Đã khôi phục mật khẩu mặc định", "Mật khẩu Admin hiện tại là: ipcec2026");
-        }
-
-        /* Clean Production HTML Packager */
-        function exportPackagedHTML() {
-            const cloneDoc = document.documentElement.cloneNode(true);
-            ["admin-active-bar", "profile-modal", "detail-modal", "admin-login-modal", "admin-cms-modal", "toast-box", "mobile-drawer"].forEach(id => {
-                const el = cloneDoc.querySelector("#" + id);
-                if (el) el.classList.add("hidden");
-            });
-            const adminBtn = cloneDoc.querySelector("#header-admin-btn");
-            if (adminBtn) {
-                adminBtn.textContent = "Admin CMS";
-                adminBtn.className = "px-3 py-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-white text-xs font-bold";
-            }
-
-            const scripts = cloneDoc.querySelectorAll("script");
-            const appScript = scripts[scripts.length - 1];
-            if (appScript) {
-                let code = appScript.textContent;
-                code = code.replace(/const defaultAdminPassword = [\s\S]*?;/, `const defaultAdminPassword = ${JSON.stringify(getActivePassword())};`);
-                code = code.replace(/const defaultProjectsData = \[[\s\S]*?\n        \];/, `const defaultProjectsData = ${JSON.stringify(projectsData, null, 12)};`);
-                code = code.replace(/const defaultNewsData = \[[\s\S]*?\n        \];/, `const defaultNewsData = ${JSON.stringify(newsData, null, 12)};`);
-                appScript.textContent = code;
-            }
-
-            const fullHtml = "<!DOCTYPE html>\n" + cloneDoc.outerHTML;
-            const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "index.html";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-            showToast("Đã xuất bản tệp index.html chính thức!", "Tệp HTML đã được tải về thư mục Downloads, sẵn sàng đưa lên hosting icec.vn.");
-        }
-
         let toastTimer = null;
         function showToast(title, msg) {
             const box = document.getElementById("toast-box");
@@ -1597,11 +1092,7 @@
             toastTimer = setTimeout(() => box.classList.add("hidden"), 4500);
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
-            loadAppData();
-            try { if (sessionStorage.getItem(STORAGE_KEYS.AUTH) === "true") isAdminLoggedIn = true; } catch (e) {}
-            updateAdminState();
-        });
+        window.addEventListener("DOMContentLoaded", loadAppData);
     </script>
 </body>
 </html>
