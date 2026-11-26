@@ -895,19 +895,7 @@
             document.getElementById("mobile-drawer").classList.toggle("hidden");
         }
 
-        function toggleLanguage() {
-            currentLang = currentLang === "vi" ? "en" : "vi";
-            document.getElementById("lang-toggle-btn").textContent = currentLang === "vi" ? "VN | EN" : "EN | VN";
-            const dict = I18N[currentLang];
-            document.querySelectorAll("[data-i18n]").forEach(el => {
-                const k = el.getAttribute("data-i18n");
-                if (dict[k]) el.innerHTML = dict[k];
-            });
-            showToast(
-                currentLang === "vi" ? "Đã chuyển sang Tiếng Việt" : "Switched to English",
-                currentLang === "vi" ? "Hiển thị giao diện tiếng Việt chính thức của IPCEC." : "Displaying official English B2B interface."
-            );
-        }
+        
 
         function filterProjects(cat, btn) {
             currentFilter = cat;
@@ -1032,11 +1020,11 @@
             e.preventDefault();
             closeModal("profile-modal");
             if (!profileUrl) {
-                showToast("Chưa cấu hình link Hồ sơ năng lực", "Vui lòng liên hệ Zalo: 0988 552 468 để nhận hồ sơ.");
+                showToast(T("Chưa cấu hình link Hồ sơ năng lực", "Company profile link not set yet"), T("Vui lòng liên hệ Zalo: 0988 552 468 để nhận hồ sơ.", "Please contact us on Zalo: 0988 552 468 to receive the profile."));
                 return;
             }
             window.open(profileUrl, "_blank", "noopener");
-            showToast("Đang mở Hồ sơ năng lực IPCEC", "Nếu tab mới không mở, hãy cho phép cửa sổ bật lên của trình duyệt.");
+            showToast(T("Đang mở Hồ sơ năng lực IPCEC", "Opening the IPCEC company profile"), T("Nếu tab mới không mở, hãy cho phép cửa sổ bật lên của trình duyệt.", "If no new tab opens, please allow pop-ups in your browser."));
         }
 
         function submitConsultationForm(e) {
@@ -1056,17 +1044,293 @@
             const mailto = "mailto:" + TO + "?cc=" + CC + "&subject=" + q(subject) + "&body=" + q(body);
             const box = document.getElementById("consultation-result");
             box.innerHTML = `
-                <div class="font-bold text-navy-900 mb-1">✓ Đã tạo thư gửi Ban Giám đốc cho ${esc(name)}</div>
-                <p class="text-slate-700 mb-3">Thư đã được mở sẵn trong Gmail. Hãy bấm <strong>Gửi</strong> để hoàn tất. Nếu chưa thấy, chọn một cách bên dưới:</p>
+                <div class="font-bold text-navy-900 mb-1">${T("✓ Đã tạo thư gửi Ban Giám đốc cho ", "✓ Email draft for the Board of Directors created for ")}${esc(name)}</div>
+                <p class="text-slate-700 mb-3">${T("Thư đã được mở sẵn trong Gmail. Hãy bấm <strong>Gửi</strong> để hoàn tất. Nếu chưa thấy, chọn một cách bên dưới:", "The email is ready in Gmail. Press <strong>Send</strong> to finish. If you do not see it, choose an option below:")}</p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="${gmail}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-navy-900 text-white font-bold text-xs">Mở Gmail</a>
-                    <a href="${mailto}" class="px-3.5 py-2 rounded-lg bg-slate-200 text-navy-900 font-bold text-xs">Mở ứng dụng Email</a>
-                    <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-teal-600 text-white font-bold text-xs">Nhắn Zalo 0988 552 468</a>
+                    <a href="${gmail}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-navy-900 text-white font-bold text-xs">${T("Mở Gmail", "Open Gmail")}</a>
+                    <a href="${mailto}" class="px-3.5 py-2 rounded-lg bg-slate-200 text-navy-900 font-bold text-xs">${T("Mở ứng dụng Email", "Open Email app")}</a>
+                    <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-teal-600 text-white font-bold text-xs">${T("Nhắn Zalo 0988 552 468", "Message on Zalo 0988 552 468")}</a>
                 </div>`;
             box.classList.remove("hidden");
             window.open(gmail, "_blank", "noopener");
             e.target.reset();
         }
+
+        const EN_DICT = {
+ "LK10 - Lô 2, Khu nhà ở Phùng Khoang, Ngõ 67 Phùng Khoang, Phường Đại Mỗ, TP Hà Nội": "LK10 - Lot 2, Phung Khoang Housing Area, Alley 67 Phung Khoang, Dai Mo Ward, Hanoi",
+ "ĐT: 0865 319 893": "Tel: 0865 319 893",
+ "Tư vấn Xây dựng Điện & Môi trường Quốc tế": "International Power Construction & Environment Consulting",
+ "Trang chủ": "Home",
+ "Giới thiệu & Năng lực": "About & Capabilities",
+ "Dịch vụ": "Services",
+ "Rơ-le & SCADA 110kV": "Relay & SCADA 110kV",
+ "Dự án tiêu biểu": "Featured Projects",
+ "Tin tức": "News",
+ "Liên hệ": "Contact",
+ "Hồ sơ năng lực": "Company Profile",
+ "Giới thiệu & Pháp lý": "About & Legal",
+ "5 Dịch vụ cốt lõi": "5 Core Services",
+ "Tin tức ngành điện": "Power Industry News",
+ "Liên hệ Hà Nội & Gia Lai": "Contact Hanoi & Gia Lai",
+ "Tải Hồ sơ năng lực (PDF)": "Download Company Profile (PDF)",
+ "EST. 2009 • ISO 9001:2008 • CHỨNG CHỈ NĂNG LỰC XÂY DỰNG HẠNG I": "EST. 2009 • ISO 9001:2008 • GRADE-I CONSTRUCTION CAPABILITY CERTIFICATE",
+ "Giải pháp tư vấn trọn gói & đồng bộ cho dự án": "Turnkey, integrated consulting solutions for",
+ "Năng lượng & Hạ tầng kỹ thuật": "Energy & Technical Infrastructure projects",
+ "Công ty Cổ phần Tư vấn Xây dựng Điện và Môi trường Quốc tế (IPCEC) đồng hành cùng Chủ đầu tư từ quy hoạch, lập dự án Pre-FS/FS, thiết kế kỹ thuật Thủy điện – Điện mặt trời – Điện gió đến tích hợp Rơ-le bảo vệ & SCADA 110kV hòa lưới an toàn.": "International Power Construction and Environment Consulting JSC (IPCEC) accompanies investors from master planning and Pre-FS/FS studies, through Hydropower – Solar – Wind engineering design, to integration of 110kV protection relay & SCADA for safe grid synchronization.",
+ "Gửi yêu cầu tư vấn dự án": "Request Project Consultation",
+ "Xem dự án tiêu biểu": "View Featured Projects",
+ "✓ Mã số DN: 0104078265": "✓ Enterprise code: 0104078265",
+ "✓ Vốn điều lệ: 30 Tỷ VNĐ": "✓ Charter capital: VND 30 billion",
+ "✓ Chứng chỉ Hạng I: BXD-00015299": "✓ Grade-I certificate: BXD-00015299",
+ "Thủy điện • Điện mặt trời • Điện gió • SCADA 110kV": "Hydropower • Solar • Wind • SCADA 110kV",
+ "Năm kinh nghiệm": "Years of experience",
+ "Thành lập từ 29/07/2009": "Established 29/07/2009",
+ "Dự án Thủy điện": "Hydropower projects",
+ "Quy mô từ 2,5MW đến 2.400MW": "From 2.5MW up to 2,400MW",
+ "Điện mặt trời & Điện gió": "Solar & Wind power",
+ "Cư Kbang, Đắk Bla 1, HNN, HBoong": "Cu Kbang, Dak Bla 1, HNN, HBoong",
+ "Rơ-le bảo vệ & SCADA": "Protection relay & SCADA",
+ "Thiết kế, tích hợp & đóng điện": "Design, integration & energization",
+ "Hệ sinh thái thiết bị & chuẩn điều độ:": "Equipment ecosystem & dispatch standards:",
+ "HỒ SƠ PHÁP LÝ & NĂNG LỰC CHUYÊN GIA": "LEGAL CREDENTIALS & EXPERT CAPABILITY",
+ "Nền tảng kỹ thuật vững chắc từ năm 2009": "A solid engineering foundation since 2009",
+ "Quy tụ hơn 45 cán bộ, kỹ sư, Tiến sĩ, Thạc sĩ chuyên ngành thủy công, điện tự động hóa và môi trường với 100% trình độ đại học và sau đại học.": "Over 45 engineers, PhDs and Masters specializing in hydraulic structures, automation and environment, 100% holding university or postgraduate degrees.",
+ "PHÁP LÝ & CHỨNG CHỈ NĂNG LỰC": "LEGAL & CAPABILITY CERTIFICATES",
+ "Thông tin định danh doanh nghiệp IPCEC., JSC": "Corporate identity of IPCEC., JSC",
+ "Tên giao dịch quốc tế:": "International trading name:",
+ "Mã số doanh nghiệp:": "Enterprise code:",
+ "0104078265 (Cấp 29/07/2009)": "0104078265 (issued 29/07/2009)",
+ "Trụ sở chính:": "Head office:",
+ "Vốn điều lệ:": "Charter capital:",
+ "30.000.000.000 VNĐ (30 Tỷ đồng)": "VND 30,000,000,000 (30 billion)",
+ "Đại diện pháp luật:": "Legal representative:",
+ "Chứng chỉ HĐXD Bộ Xây dựng:": "Construction practice certificate (MoC):",
+ "Số BXD-00015299 (Hạng I)": "No. BXD-00015299 (Grade I)",
+ "Giấy phép hoạt động điện lực:": "Electricity activity license:",
+ "Cục Điều tiết Điện lực (Bộ Công Thương)": "Electricity Regulatory Authority (Ministry of Industry and Trade)",
+ "Hệ thống quản lý chất lượng:": "Quality management system:",
+ "ĐỘI NGŨ CHUYÊN GIA ĐẦU NGÀNH": "LEADING EXPERT TEAM",
+ "Nhân sự Chủ nhiệm & Chủ trì thiết kế chủ chốt": "Key project managers & lead designers",
+ "KS. Trần Văn Thọ (Chủ nhiệm dự án):": "Eng. Tran Van Tho (Project Manager):",
+ "ĐH Xây dựng Tiệp Khắc, 40 năm kinh nghiệm thủy lợi – thủy điện (Sơn La, Trị An, Trung Sơn, Pleikrong, Quy hoạch thủy điện Lào 27.000MW).": "Graduate of the Czechoslovak University of Civil Engineering, 40 years in irrigation and hydropower (Son La, Tri An, Trung Son, Pleikrong, Laos hydropower master plan 27,000MW).",
+ "KS. Đỗ Chí Công (Cố vấn / Chủ nhiệm dự án):": "Eng. Do Chi Cong (Advisor / Project Manager):",
+ "ĐH Bách khoa Leningrad (Nga), chủ trì thiết kế & giám sát các đại dự án Sơn La 2400MW, Lai Châu 1200MW, Yaly 720MW.": "Graduate of Leningrad Polytechnic (Russia), lead designer & supervisor of major projects Son La 2,400MW, Lai Chau 1,200MW, Yaly 720MW.",
+ "TS. Nguyễn Công Thành (Chuyên gia Thủy lực):": "Dr. Nguyen Cong Thanh (Hydraulics Expert):",
+ "Tiến sĩ ĐH Hồ Hải, chuyên sâu thủy lực & động lực học dòng sông (A Vương, Đồng Nai 3&4, Bản Vẽ, Sơn La).": "PhD from Hohai University, specialist in hydraulics & river dynamics (A Vuong, Dong Nai 3&4, Ban Ve, Son La).",
+ "TS. Vũ Bá Thao (Chuyên gia Công trình ngầm):": "Dr. Vu Ba Thao (Underground Works Expert):",
+ "Tiến sĩ ĐH Đồng Tế, giải thưởng khoa học VIFOTECH, chuyên gia hầm dẫn nước & kết cấu ngầm.": "PhD from Tongji University, VIFOTECH science award winner, expert in headrace tunnels & underground structures.",
+ "ThS. Nguyễn Đức Trung & ThS. Nguyễn Văn Bình:": "M.Eng. Nguyen Duc Trung & M.Eng. Nguyen Van Binh:",
+ "Chủ nhiệm bộ môn Thủy văn – Kinh tế năng lượng & Tổ chức thi công (ĐH Thủy Lợi).": "Heads of Hydrology – Energy Economics and Construction Organization (Thuy Loi University).",
+ "LĨNH VỰC HOẠT ĐỘNG CỐT LÕI": "CORE AREAS OF ACTIVITY",
+ "5 Trụ cột Tư vấn & Giải pháp Kỹ thuật": "5 Pillars of Consulting & Engineering Solutions",
+ "Quy trình khép kín giúp Chủ đầu tư tối ưu tổng mức đầu tư, rút ngắn tiến độ pháp lý và đảm bảo vận hành an toàn tuyệt đối.": "A closed-loop process helping investors optimize total investment, shorten legal timelines and ensure absolutely safe operation.",
+ "Quy hoạch & Lập dự án (Pre-FS, FS)": "Planning & Project Preparation (Pre-FS, FS)",
+ "Quy hoạch bậc thang thủy điện, lưới điện; lập báo cáo Pre-FS, FS cho Thủy điện, Điện gió, Điện mặt trời, Điện sinh khối.": "Hydropower cascade and grid planning; Pre-FS and FS reports for Hydropower, Wind, Solar and Biomass.",
+ "Thiết kế kỹ thuật & Bản vẽ thi công": "Engineering Design & Construction Drawings",
+ "Thiết kế TKKT, TKBVTC (Chứng chỉ Hạng I), thẩm tra thiết kế, lập tổng dự toán và tối ưu kết cấu thủy công – cơ điện.": "Basic and detailed design (Grade-I certificate), design verification, total budget estimates and optimization of hydraulic and mechanical-electrical structures.",
+ "Rơ-le bảo vệ & SCADA (đến 110kV)": "Protection Relay & SCADA (up to 110kV)",
+ "Cung cấp thiết bị, thiết kế thỏa thuận rơ-le, ghép nối SCADA, đào tạo vận hành và lập phương thức đóng điện hòa lưới.": "Equipment supply, relay coordination design, SCADA interfacing, operator training and energization procedures for grid connection.",
+ "Quản lý dự án & Tư vấn giám sát": "Project Management & Supervision",
+ "Tư vấn quản lý dự án (PMU), giám sát thi công xây lắp, kiểm định an toàn đập và quan trắc chuyển dịch công trình.": "Project management consulting (PMU), construction supervision, dam safety inspection and structural displacement monitoring.",
+ "Pháp lý, Môi trường (ĐTM) & Đấu nối": "Legal, Environment (EIA) & Grid Connection",
+ "Báo cáo ĐTM, thỏa thuận đấu nối lưới điện quốc gia, thủ tục đất đai và giấy phép hoạt động điện lực.": "EIA reports, national grid connection agreements, land procedures and electricity activity licenses.",
+ "GIẢI PHÁP MŨI NHỌN KỸ THUẬT CAO": "HIGH-TECH FLAGSHIP SOLUTION",
+ "Thiết bị & Giải pháp Rơ-le bảo vệ, SCADA (đến 110kV)": "Protection Relay & SCADA Equipment and Solutions (up to 110kV)",
+ "Dịch vụ trọn gói từ thiết kế thỏa thuận rơ-le, tích hợp hệ thống SCADA chuẩn IEC 61850 đến đào tạo cấp chứng nhận vận hành và lập phương thức đóng điện hòa lưới.": "Turnkey service from relay coordination design and IEC 61850 SCADA integration to certified operator training and energization procedures for grid connection.",
+ "LỚP 01 • CẤP ĐIỀU ĐỘ (A0 / Ax / EVN)": "LAYER 01 • DISPATCH LEVEL (A0 / Ax / EVN)",
+ "Kết nối Điều độ & Hòa lưới 110kV": "Dispatch Connection & 110kV Grid Synchronization",
+ "• Truyền dẫn dữ liệu chuẩn IEC 60870-5-101 / 104": "• IEC 60870-5-101 / 104 data transmission",
+ "• Tích hợp điều khiển công suất tác dụng/phản kháng AGC/AVC": "• Integrated active/reactive power control AGC/AVC",
+ "• Kênh truyền cáp quang chính & dự phòng độc lập": "• Independent main & backup optical fiber channels",
+ "LỚP 02 • CẤP TRẠM & PHÒNG ĐIỀU KHIỂN": "LAYER 02 • STATION & CONTROL ROOM LEVEL",
+ "Hệ thống SCADA / HMI Chuẩn IEC 61850": "SCADA / HMI System, IEC 61850 Standard",
+ "• Máy chủ SCADA dự phòng nóng, Gateway truyền tin": "• Hot-standby SCADA servers, communication gateway",
+ "• Đồng bộ thời gian vệ tinh GPS / IEEE 1588 PTP": "• GPS / IEEE 1588 PTP time synchronization",
+ "• Mạng vòng quang dự phòng PRP / HSR độ tin cậy cao": "• High-reliability PRP / HSR redundant optical ring network",
+ "LỚP 03 • CẤP NGĂN LỘ & RƠ-LE BẢO VỆ": "LAYER 03 • BAY LEVEL & PROTECTION RELAYS",
+ "Tủ Bảng Rơ-le & Điều khiển Mức ngăn": "Relay Panels & Bay Control",
+ "• Bảo vệ so lệch MBA/ĐZ (F87T, F87L, F87B) & Khoảng cách (F21)": "• Differential protection for transformers/lines (F87T, F87L, F87B) & distance (F21)",
+ "• Bộ điều khiển mức ngăn BCU & Ghi sự cố tự động FR": "• Bay control units (BCU) & automatic fault recorder (FR)",
+ "• Thiết bị chính hãng Siemens, ABB, SEL, Schneider": "• Genuine Siemens, ABB, SEL, Schneider equipment",
+ "BƯỚC 01": "STEP 01",
+ "Thiết kế & Thỏa thuận Rơ-le": "Relay Design & Coordination",
+ "Tính toán chỉnh định trị số rơ-le, thỏa thuận với Điều độ (A0/Ax) và đăng ký đánh số thiết bị nhất/nhị thứ.": "Relay setting calculations, coordination with Dispatch (A0/Ax) and registration of primary/secondary equipment numbering.",
+ "BƯỚC 02": "STEP 02",
+ "Cung cấp & Tích hợp Tủ bảng": "Panel Supply & Integration",
+ "Cung cấp rơ-le, BCU, máy chủ SCADA chính hãng; lắp đặt hoàn chỉnh tại nhà máy điện và TBA đến 110kV.": "Supply of genuine relays, BCUs and SCADA servers; complete installation at power plants and substations up to 110kV.",
+ "BƯỚC 03": "STEP 03",
+ "Thí nghiệm & Ghép nối SCADA": "Testing & SCADA Interfacing",
+ "Thí nghiệm hợp bộ rơ-le, kiểm tra tín hiệu End-to-End về trung tâm điều độ và nghiệm thu tự động hóa.": "Relay set testing, end-to-end signal verification to the dispatch center and automation acceptance.",
+ "BƯỚC 04": "STEP 04",
+ "Đào tạo & Đóng điện hòa lưới": "Training & Grid Energization",
+ "Biên soạn Quy trình phối hợp vận hành, bồi huấn cấp chứng nhận vận hành và lập phương thức đóng điện.": "Drafting operation coordination procedures, certified operator training and energization procedures.",
+ "NĂNG LỰC THỰC CHIẾN": "PROVEN TRACK RECORD",
+ "Dự án Tiêu biểu IPCEC đã thực hiện": "Featured Projects by IPCEC",
+ "Danh mục các công trình Thủy điện, Điện mặt trời, Điện gió, Điện sinh khối và Hệ thống Rơ-le/SCADA tiêu biểu trích xuất từ Hồ sơ năng lực IPCEC.": "Selected Hydropower, Solar, Wind, Biomass and Relay/SCADA projects extracted from the IPCEC company profile.",
+ "Tất cả dự án": "All projects",
+ "Thủy điện": "Hydropower",
+ "Điện mặt trời": "Solar",
+ "Điện gió": "Wind",
+ "Điện sinh khối / Rác": "Biomass / Waste",
+ "Các dự án trọng điểm chuyên gia/kỹ sư/công ty thiết kế/tham gia thiết kế": "Key projects in which our experts/engineers/company designed or took part in design",
+ "Tên công trình / Dự án": "Project name",
+ "Công suất": "Capacity",
+ "Vai trò / Phạm vi thực hiện": "Role / Scope",
+ "Đặc điểm kỹ thuật nổi bật": "Key technical features",
+ "Thủy điện Sơn La": "Son La Hydropower",
+ "Tư vấn thiết kế": "Design consulting",
+ "Đập bê tông đầm lăn RCC cao 138m": "RCC dam, 138m high",
+ "Thủy điện Lai Châu": "Lai Chau Hydropower",
+ "Đập bê tông đầm lăn RCC": "RCC dam",
+ "Thủy điện Luông Pha Băng (Lào)": "Luang Prabang Hydropower (Laos)",
+ "Đập bê tông đầm lăn RCC quy mô quốc tế": "International-scale RCC dam",
+ "Thủy điện Ialy & Huội Quảng": "Ialy & Huoi Quang Hydropower",
+ "Tuyến năng lượng ngầm hoàn toàn": "Fully underground powerhouse",
+ "Thủy điện Tuyên Quang & Bản Chát": "Tuyen Quang & Ban Chat Hydropower",
+ "Đập CFRD và Đập RCC cao 133m": "CFRD dam and 133m RCC dam",
+ "Thủy điện Đăk Mi 1 & Đăk Mi 1A": "Dak Mi 1 & Dak Mi 1A Hydropower",
+ "Đập bê tông CVC cao 80m": "CVC concrete dam, 80m high",
+ "Điện mặt trời Cư Kbang": "Cu Kbang Solar",
+ "Quy hoạch & FS": "Planning & FS",
+ "Bổ sung quy hoạch, lập dự án đầu tư": "Planning supplement, investment project preparation",
+ "ĐMT Đắk Bla 1 & Chư Gu - Krông Pa": "Dak Bla 1 & Chu Gu - Krong Pa Solar",
+ "Thiết kế & FS": "Design & FS",
+ "Đấu nối lưới điện khu vực Tây Nguyên": "Grid connection in the Central Highlands",
+ "Điện gió HNN & Điện gió HBoong": "HNN & HBoong Wind",
+ "Bổ sung quy hoạch, lập dự án đầu tư tại Gia Lai": "Planning supplement, investment project preparation in Gia Lai",
+ "Điện rác Hưng Lâm": "Hung Lam Waste-to-Energy",
+ "Công nghệ đốt rác phát điện thân thiện môi trường": "Environmentally friendly waste incineration power technology",
+ "TIN TỨC & CHÍNH SÁCH NGÀNH ĐIỆN": "POWER INDUSTRY NEWS & POLICY",
+ "Cập nhật Hoạt động Dự án & Quy định Đấu nối": "Project Updates & Grid Connection Regulations",
+ "KẾT NỐI HỢP TÁC": "PARTNER WITH US",
+ "Liên hệ Tư vấn Dự án & Báo giá Kỹ thuật": "Project Consulting & Technical Quotation",
+ "Hệ thống Văn phòng & Điều hành Dự án": "Offices & Project Operations Network",
+ "1. TRỤ SỞ CHÍNH HÀ NỘI (IPCEC., JSC)": "1. HANOI HEADQUARTERS (IPCEC., JSC)",
+ "LK10 - Lô 2, Khu nhà ở Phùng Khoang, Ngõ 67 Phùng Khoang, Phường Đại Mỗ, TP Hà Nội, Việt Nam.": "LK10 - Lot 2, Phung Khoang Housing Area, Alley 67 Phung Khoang, Dai Mo Ward, Hanoi, Vietnam.",
+ "Điện thoại bàn:": "Landline:",
+ "2. VĂN PHÒNG KHU VỰC TÂY NGUYÊN (GIA LAI)": "2. CENTRAL HIGHLANDS OFFICE (GIA LAI)",
+ "Điều hành kỹ thuật, tư vấn giám sát & giải pháp Rơ-le/SCADA các dự án Thủy điện, Điện gió, Điện mặt trời khu vực Tây Nguyên.": "Technical operations, supervision consulting & Relay/SCADA solutions for Hydropower, Wind and Solar projects in the Central Highlands.",
+ "Zalo Tư vấn 24/7:": "Zalo consulting 24/7:",
+ "Email tiếp nhận hồ sơ:": "Email for documents:",
+ "Website chính thức:": "Official website:",
+ "Gọi ĐT bàn: 0865 319 893": "Call landline: 0865 319 893",
+ "Tải Hồ sơ năng lực": "Download Company Profile",
+ "Gửi yêu cầu Tư vấn / Mời thầu": "Send Consultation / Tender Request",
+ "Họ và tên người liên hệ *": "Contact person's full name *",
+ "VD: Nguyễn Văn A - Giám đốc Ban QLDA": "E.g. Nguyen Van A - Director, Project Management Board",
+ "Số điện thoại / Zalo *": "Phone / Zalo *",
+ "Email doanh nghiệp": "Business email",
+ "Lĩnh vực cần IPCEC tư vấn": "Area where IPCEC consulting is needed",
+ "Giải pháp Rơ-le bảo vệ & SCADA (đến 110kV) & Đóng điện": "Protection relay & SCADA solutions (up to 110kV) & energization",
+ "Lập dự án đầu tư (Pre-FS / FS) Thủy điện / Điện gió / ĐMT": "Investment project preparation (Pre-FS / FS) for Hydropower / Wind / Solar",
+ "Thiết kế kỹ thuật (TKKT) & Bản vẽ thi công (TKBVTC)": "Engineering design (basic & detailed drawings)",
+ "Tư vấn quản lý dự án & Giám sát thi công": "Project management consulting & construction supervision",
+ "Pháp lý dự án, ĐTM & Thỏa thuận đấu nối": "Project legal, EIA & grid connection agreements",
+ "Thông tin tóm tắt dự án (Công suất, địa điểm...)": "Project summary (capacity, location...)",
+ "Nhập quy mô MW/MWp, cấp điện áp đấu nối hoặc tiến độ dự kiến...": "Enter MW/MWp scale, connection voltage level or expected schedule...",
+ "Gửi yêu cầu tới Ban Giám đốc IPCEC": "Send request to IPCEC Board of Directors",
+ "CÔNG TY CỔ PHẦN TƯ VẤN XÂY DỰNG ĐIỆN VÀ MÔI TRƯỜNG QUỐC TẾ": "INTERNATIONAL POWER CONSTRUCTION AND ENVIRONMENT CONSULTING JOINT STOCK COMPANY",
+ "Đơn vị tư vấn chuyên sâu về Quy hoạch, Thiết kế Thủy điện, Năng lượng tái tạo và Giải pháp Rơ-le bảo vệ – SCADA đến 110kV. Hoạt động theo hệ thống quản lý chất lượng ISO 9001:2008.": "A consulting firm specializing in planning, hydropower design, renewable energy and protection relay – SCADA solutions up to 110kV. Operating under an ISO 9001:2008 quality management system.",
+ "Danh mục kỹ thuật": "Technical directory",
+ "Hồ sơ pháp lý & Chứng chỉ Hạng I": "Legal profile & Grade-I certificate",
+ "5 Dịch vụ tư vấn cốt lõi": "5 core consulting services",
+ "Giải pháp Rơ-le & SCADA 110kV": "Relay & SCADA 110kV solutions",
+ "Danh mục dự án tiêu biểu": "Featured project list",
+ "Liên hệ trực tiếp": "Direct contact",
+ "Trụ sở: LK10 - Lô 2, Khu nhà ở Phùng Khoang, Ngõ 67 Phùng Khoang, Phường Đại Mỗ, TP Hà Nội, Việt Nam": "Head office: LK10 - Lot 2, Phung Khoang Housing Area, Alley 67 Phung Khoang, Dai Mo Ward, Hanoi, Vietnam",
+ "Điện thoại:": "Phone:",
+ "© 2009–2026 IPCEC., JSC (https://icec.vn). Bản quyền thuộc Công ty CP Tư vấn Xây dựng Điện và Môi trường Quốc tế.": "© 2009–2026 IPCEC., JSC (https://icec.vn). Copyright belongs to International Power Construction and Environment Consulting JSC.",
+ "Gọi IPCEC": "Call IPCEC",
+ "Hồ sơ PDF": "Profile PDF",
+ "Báo giá": "Get a quote",
+ "Tải Hồ sơ năng lực IPCEC (E-Profile)": "Download IPCEC Company Profile (E-Profile)",
+ "Đóng": "Close",
+ "Vui lòng nhập thông tin đơn vị để tải Hồ sơ năng lực IPCEC (bao gồm ĐKDN 0104078265, Chứng chỉ Hạng I BXD-00015299, danh sách >30 dự án và hồ sơ chuyên gia).": "Please enter your organization's details to get the IPCEC Company Profile (including business registration 0104078265, Grade-I certificate BXD-00015299, list of 30+ projects and expert profiles).",
+ "Họ tên & Chức vụ *": "Full name & position *",
+ "VD: Lê Văn B - Trưởng phòng Kế hoạch": "E.g. Le Van B - Head of Planning Department",
+ "Tên Công ty / Chủ đầu tư *": "Company / Investor name *",
+ "Tên đơn vị của quý khách": "Your organization's name",
+ "Số điện thoại / Email nhận tài liệu *": "Phone / Email to receive documents *",
+ "09xx xxx xxx hoặc email@domain.vn": "09xx xxx xxx or email@domain.vn",
+ "Xác nhận & Tải Hồ sơ năng lực": "Confirm & Download Company Profile",
+ "Chi tiết": "Details",
+ "Công suất / Cấp ĐA:": "Capacity / Voltage:",
+ "Địa điểm:": "Location:",
+ "Giai đoạn:": "Period:",
+ "Xem thông số": "View specifications",
+ "Lĩnh vực:": "Field:",
+ "Công suất / Quy mô:": "Capacity / Scale:",
+ "Thời gian:": "Time:",
+ "Phạm vi dịch vụ IPCEC đảm nhận:": "IPCEC scope of services:",
+ "Tư vấn dự án tương tự": "Consult on a similar project",
+ "Đọc chi tiết": "Read more",
+ "Chuyên mục:": "Category:",
+ "Thủy điện Sơn La & Thủy điện Lai Châu": "Son La & Lai Chau Hydropower",
+ "Sơn La & Lai Châu": "Son La & Lai Chau",
+ "Tư vấn thiết kế kết cấu đập bê tông đầm lăn RCC (đập cao 138m) & tính toán thủy lực công trình.": "Design consulting for RCC dam structures (138m high dam) and hydraulic calculations.",
+ "Quảng Nam": "Quang Nam",
+ "Tư vấn thiết kế kỹ thuật đập bê tông CVC cao 80m, tuyến năng lượng và trạm biến áp đấu nối.": "Basic design consulting for the 80m CVC concrete dam, power waterway and connecting substation.",
+ "Nhà máy Điện mặt trời Cư Kbang": "Cu Kbang Solar Power Plant",
+ "Đắk Lắk (Tây Nguyên)": "Dak Lak (Central Highlands)",
+ "Lập hồ sơ bổ sung quy hoạch phát triển điện lực và Báo cáo nghiên cứu khả thi (FS).": "Preparation of power development planning supplement and Feasibility Study (FS) report.",
+ "Điện mặt trời Đắk Bla 1 & Chư Gu - Krông Pa": "Dak Bla 1 & Chu Gu - Krong Pa Solar",
+ "Kon Tum & Gia Lai": "Kon Tum & Gia Lai",
+ "Bổ sung quy hoạch, lập dự án đầu tư, thiết kế kỹ thuật và thỏa thuận đấu nối lưới điện 110kV.": "Planning supplement, investment project preparation, basic design and 110kV grid connection agreement.",
+ "Nhà máy Điện gió HNN & Điện gió HBoong": "HNN & HBoong Wind Power Plants",
+ "Gia Lai (Tây Nguyên)": "Gia Lai (Central Highlands)",
+ "Khảo sát đo gió, lập hồ sơ bổ sung quy hoạch và Báo cáo nghiên cứu khả thi (FS) dự án điện gió.": "Wind measurement survey, planning supplement and Feasibility Study (FS) for wind power projects.",
+ "Hệ thống Rơ-le bảo vệ & SCADA TBA 110kV Nhà máy điện": "Protection Relay & SCADA Systems for 110kV Power Plant Substations",
+ "Cấp điện áp 110kV": "110kV voltage level",
+ "Tây Nguyên & Miền Bắc": "Central Highlands & Northern Vietnam",
+ "Cung cấp thiết bị, thiết kế thỏa thuận rơ-le, ghép nối SCADA về A0/Ax, đào tạo vận hành & lập phương thức đóng điện.": "Equipment supply, relay coordination design, SCADA interfacing to A0/Ax, operator training & energization procedures.",
+ "Nhà máy Điện rác Hưng Lâm": "Hung Lam Waste-to-Energy Plant",
+ "Việt Nam": "Vietnam",
+ "Tư vấn thiết kế công nghệ đốt rác phát điện, đánh giá tác động môi trường và đấu nối lưới điện.": "Design consulting for waste-incineration power technology, environmental impact assessment and grid connection.",
+ "Thủy điện Luông Pha Băng (CHDCND Lào)": "Luang Prabang Hydropower (Lao PDR)",
+ "Luang Prabang, Lào": "Luang Prabang, Laos",
+ "Tham gia tư vấn thiết kế đập bê tông đầm lăn RCC và giải pháp thủy công quy mô quốc tế.": "Participation in design consulting for the RCC dam and international-scale hydraulic structure solutions.",
+ "IPCEC hoàn thành thí nghiệm hợp bộ Rơ-le bảo vệ & ghép nối SCADA 110kV phục vụ đóng điện hòa lưới": "IPCEC completes relay set testing & 110kV SCADA interfacing for grid energization",
+ "Giải pháp SCADA 110kV": "110kV SCADA Solutions",
+ "Đội ngũ kỹ sư tự động hóa IPCEC đã hoàn tất công tác thỏa thuận rơ-le, đăng ký đánh số thiết bị, bồi huấn vận hành và nghiệm thu tín hiệu SCADA chuẩn IEC 61850.": "IPCEC automation engineers have completed relay coordination, equipment numbering registration, operator training and IEC 61850 SCADA signal acceptance.",
+ "Lưu ý kỹ thuật khi lập phương thức đóng điện & Quy trình phối hợp vận hành nhà máy điện đấu nối 110kV": "Technical notes on energization procedures & operation coordination for 110kV-connected power plants",
+ "Chính sách & Kỹ thuật": "Policy & Engineering",
+ "Tổng hợp các yêu cầu mới nhất của Trung tâm Điều độ Hệ thống điện về hồ sơ rơ-le bảo vệ, thử nghiệm AGC/SCADA và cấp chứng nhận chức danh vận hành.": "A summary of the latest requirements from the National Load Dispatch Center on protection relay documentation, AGC/SCADA testing and operator certification.",
+ "Năng lực thiết kế Hạng I của IPCEC trong tối ưu hóa kết cấu đập và tuyến năng lượng thủy điện": "IPCEC's Grade-I design capability in optimizing dam structures and hydropower waterways",
+ "Năng lực IPCEC": "IPCEC Capability",
+ "Với chứng chỉ năng lực hoạt động xây dựng Hạng I số BXD-00015299, IPCEC mang đến giải pháp tối ưu suất đầu tư cho các công trình thủy điện vừa và nhỏ.": "With Grade-I construction practice certificate No. BXD-00015299, IPCEC delivers solutions that optimize the investment cost of small and medium hydropower projects."
+};
+        const T = (vi, en) => currentLang === "en" ? en : vi;
+        function applyLang() {
+            const en = currentLang === "en";
+            const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            let n;
+            while ((n = w.nextNode())) {
+                if (/^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentNode.nodeName)) continue;
+                if (n.__vi === undefined) {
+                    const k = n.nodeValue.replace(/\s+/g, " ").trim();
+                    if (!EN_DICT[k]) continue;
+                    n.__vi = n.nodeValue; n.__k = k;
+                }
+                n.nodeValue = en ? n.__vi.replace(/\S[\s\S]*\S|\S/, () => EN_DICT[n.__k]) : n.__vi;
+            }
+            document.querySelectorAll("[placeholder]").forEach(el => {
+                if (el.dataset.vi === undefined) { if (!EN_DICT[el.placeholder]) return; el.dataset.vi = el.placeholder; }
+                el.placeholder = en ? EN_DICT[el.dataset.vi] : el.dataset.vi;
+            });
+            document.documentElement.lang = currentLang;
+        }
+        function toggleLanguage() {
+            currentLang = currentLang === "vi" ? "en" : "vi";
+            document.getElementById("lang-toggle-btn").textContent = currentLang === "vi" ? "VN | EN" : "EN | VN";
+            applyLang();
+            showToast(T("Đã chuyển sang Tiếng Việt", "Switched to English"), T("Hiển thị giao diện tiếng Việt.", "Displaying the English interface."));
+        }
+        let langQueued = false;
+        new MutationObserver(() => {
+            if (currentLang !== "en" || langQueued) return;
+            langQueued = true;
+            requestAnimationFrame(() => { langQueued = false; applyLang(); });
+        }).observe(document.body, { childList: true, subtree: true });
 
         window.addEventListener("DOMContentLoaded", loadAppData);
     </script>
