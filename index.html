@@ -91,7 +91,7 @@
             </div>
             <div class="flex items-center gap-5 font-semibold">
                 <a href="tel:0865319893" class="hover:text-amber-400 transition">ĐT: 0865 319 893</a>
-                <a href="tel:0988552468" class="text-amber-400 hover:text-amber-300 transition">Hotline: 0988 552 468</a>
+                <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300 transition">Zalo: 0988 552 468</a>
                 <a href="mailto:icec.vn@gmail.com" class="hover:text-white transition">icec.vn@gmail.com</a>
             </div>
         </div>
@@ -499,14 +499,14 @@
                         </div>
                         <div class="space-y-2 text-sm text-slate-800">
                             <div><strong>Điện thoại bàn:</strong> <a href="tel:0865319893" class="text-navy-900 font-extrabold">0865 319 893</a></div>
-                            <div><strong>Hotline Tư vấn 24/7:</strong> <a href="tel:0988552468" class="text-rose-600 font-black text-base">0988 552 468</a></div>
+                            <div><strong>Zalo Tư vấn 24/7:</strong> <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="text-rose-600 font-black text-base">0988 552 468</a></div>
                             <div><strong>Email tiếp nhận hồ sơ:</strong> <a href="mailto:icec.vn@gmail.com" class="text-energy-600 font-semibold hover:underline">icec.vn@gmail.com</a> | <a href="mailto:anhdt.ipcec@gmail.com" class="text-energy-600 font-semibold hover:underline">anhdt.ipcec@gmail.com</a></div>
                             <div><strong>Website chính thức:</strong> https://icec.vn</div>
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3 mt-6">
                         <a href="tel:0865319893" class="px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm">Gọi ĐT bàn: 0865 319 893</a>
-                        <a href="tel:0988552468" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-sm">Hotline: 0988 552 468</a>
+                        <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-sm">Zalo: 0988 552 468</a>
                         <button onclick="openProfileModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 hover:border-navy-900 text-navy-900 font-bold text-sm">Tải Hồ sơ năng lực</button>
                     </div>
                 </div>
@@ -572,7 +572,7 @@
                 <div>
                     <div class="font-bold text-white text-base mb-3">Liên hệ trực tiếp</div>
                     <p class="text-slate-400 mb-1.5">Trụ sở: LK10 - Lô 2, Khu nhà ở Phùng Khoang, Ngõ 67 Phùng Khoang, Phường Đại Mỗ, TP Hà Nội, Việt Nam</p>
-                    <p class="text-slate-400 mb-1.5">Điện thoại: <a href="tel:0865319893" class="text-white font-bold">0865 319 893</a> • Hotline: <a href="tel:0988552468" class="text-amber-400 font-bold">0988 552 468</a></p>
+                    <p class="text-slate-400 mb-1.5">Điện thoại: <a href="tel:0865319893" class="text-white font-bold">0865 319 893</a> • Zalo: <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="text-amber-400 font-bold">0988 552 468</a></p>
                     <p class="text-slate-400">Email: icec.vn@gmail.com | anhdt.ipcec@gmail.com</p>
                 </div>
             </div>
@@ -863,6 +863,7 @@
 
         const DATA_URL = "data.json";
         let bannerData = "";
+        let profileUrl = "";
         function esc(v) { return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
         async function loadAppData() {
             let d = null;
@@ -874,6 +875,8 @@
             projectsData = (d && d.projects) || JSON.parse(JSON.stringify(defaultProjectsData));
             newsData = (d && d.news) || JSON.parse(JSON.stringify(defaultNewsData));
             bannerData = (d && d.banner) || "";
+            profileUrl = (d && d.profileUrl) || "";
+            const pin = document.getElementById("cms-profile-url"); if (pin) pin.value = profileUrl;
             if (bannerData) document.getElementById("hero-banner-img").src = bannerData;
             renderProjects(); renderNews();
         }
@@ -1009,78 +1012,10 @@
         function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
         /* Official E-Profile Download Handler */
-        function handleProfileDownload(e) {
-            e.preventDefault();
-            const partnerName = document.getElementById("prof-partner-name").value.trim();
-            const partnerOrg = document.getElementById("prof-partner-org").value.trim();
-            closeModal("profile-modal");
-
-            const summaryText = [
-                "CÔNG TY CỔ PHẦN TƯ VẤN XÂY DỰNG ĐIỆN VÀ MÔI TRƯỜNG QUỐC TẾ (IPCEC., JSC)",
-                "INTERNATIONAL POWER CONSTRUCTION AND ENVIRONMENT CONSULTING JOINT STOCK COMPANY",
-                "==========================================================================",
-                "1. THÔNG TIN PHÁP LÝ & LIÊN HỆ CHÍNH THỨC:",
-                "- Mã số doanh nghiệp: 0104078265 (Thành lập ngày 29/07/2009)",
-                "- Vốn điều lệ: 30.000.000.000 VNĐ (Ba mươi tỷ đồng)",
-                "- Chứng chỉ năng lực HĐXD: Số BXD-00015299 (Hạng I - Bộ Xây dựng)",
-                "- Hệ thống quản lý chất lượng: ISO 9001:2008 (UKAS)",
-                "- Trụ sở chính: LK10 - Lô 2, Khu nhà ở Phùng Khoang, Ngõ 67 Phùng Khoang, Phường Đại Mỗ, TP Hà Nội, Việt Nam",
-                "- Điện thoại bàn: 0865 319 893 | Hotline: 0988 552 468",
-                "- Email: icec.vn@gmail.com | anhdt.ipcec@gmail.com | Website: https://icec.vn",
-                "",
-                "2. LĨNH VỰC HOẠT ĐỘNG MŨI NHỌN:",
-                "- Quy hoạch, lập dự án đầu tư (Pre-FS, FS), thiết kế TKKT & TKBVTC Thủy điện, Điện mặt trời, Điện gió, Điện sinh khối.",
-                "- Giải pháp đồng bộ Rơ-le bảo vệ & SCADA (đến 110kV): Thiết kế thỏa thuận rơ-le, tích hợp SCADA chuẩn IEC 61850, đào tạo vận hành & lập phương thức đóng điện hòa lưới.",
-                "",
-                `Tài liệu xuất cho đối tác: ${partnerName} - ${partnerOrg}`
-            ].join("\n");
-
-            const blob = new Blob([summaryText], { type: "text/plain;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "IPCEC_Ho_So_Nang_Luc_Tom_Tat.txt";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-            showToast("Đã tải Hồ sơ năng lực IPCEC!", "Cảm ơn Quý đối tác. Liên hệ ĐT: 0865 319 893 hoặc Hotline: 0988 552 468 để nhận bản PDF đầy đủ.");
-        }
+        
 
         /* Consultation Request Handler with Direct Email & Phone Actions */
-        function submitConsultationForm(e) {
-            e.preventDefault();
-            const name = document.getElementById("req-name").value.trim();
-            const phone = document.getElementById("req-phone").value.trim();
-            const email = document.getElementById("req-email").value.trim();
-            const service = document.getElementById("req-service").value;
-            const note = document.getElementById("req-note").value.trim();
-
-            const subject = encodeURIComponent(`[icec.vn] Yêu cầu tư vấn dự án từ ${name}`);
-            const body = encodeURIComponent(
-                `Kính gửi Ban Giám đốc IPCEC., JSC,\n\n` +
-                `Họ tên người liên hệ: ${name}\n` +
-                `Số điện thoại / Zalo: ${phone}\n` +
-                `Email: ${email || "Không cung cấp"}\n` +
-                `Lĩnh vực quan tâm: ${service}\n` +
-                `Nội dung dự án: ${note || "Trao đổi chi tiết qua điện thoại"}\n`
-            );
-
-            const resultBox = document.getElementById("consultation-result");
-            resultBox.innerHTML = `
-                <div class="font-bold text-navy-900 mb-1">✓ Đã tiếp nhận thông tin của ${name}!</div>
-                <p class="text-slate-700 mb-3">Quý khách có thể gửi nhanh hồ sơ qua Email hoặc gọi trực tiếp cho Phòng Kỹ thuật IPCEC:</p>
-                <div class="flex flex-wrap gap-2">
-                    <a href="mailto:icec.vn@gmail.com?cc=anhdt.ipcec@gmail.com&subject=${subject}&body=${body}" class="px-3.5 py-2 rounded-lg bg-navy-900 text-white font-bold text-xs">Mở trình gửi Email ngay</a>
-                    <a href="tel:0865319893" class="px-3.5 py-2 rounded-lg bg-amber-500 text-navy-950 font-bold text-xs">Gọi 0865 319 893</a>
-                    <a href="tel:0988552468" class="px-3.5 py-2 rounded-lg bg-teal-600 text-white font-bold text-xs">Hotline 0988 552 468</a>
-                </div>
-            `;
-            resultBox.classList.remove("hidden");
-            e.target.reset();
-            showToast("Đã ghi nhận yêu cầu tư vấn!", `Cảm ơn ${name}. IPCEC sẽ phản hồi trong thời gian sớm nhất.`);
-        }
+        
 
         let toastTimer = null;
         function showToast(title, msg) {
@@ -1090,6 +1025,47 @@
             box.classList.remove("hidden");
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => box.classList.add("hidden"), 4500);
+        }
+
+        
+        function handleProfileDownload(e) {
+            e.preventDefault();
+            closeModal("profile-modal");
+            if (!profileUrl) {
+                showToast("Chưa cấu hình link Hồ sơ năng lực", "Vui lòng liên hệ Zalo: 0988 552 468 để nhận hồ sơ.");
+                return;
+            }
+            window.open(profileUrl, "_blank", "noopener");
+            showToast("Đang mở Hồ sơ năng lực IPCEC", "Nếu tab mới không mở, hãy cho phép cửa sổ bật lên của trình duyệt.");
+        }
+
+        function submitConsultationForm(e) {
+            e.preventDefault();
+            const val = id => document.getElementById(id).value.trim();
+            const name = val("req-name"), phone = val("req-phone"), email = val("req-email"), note = val("req-note");
+            const service = document.getElementById("req-service").value;
+            const TO = "icec.vn@gmail.com", CC = "anhdt.ipcec@gmail.com", q = encodeURIComponent;
+            const subject = "[icec.vn] Yêu cầu tư vấn dự án từ " + name;
+            const body = "Kính gửi Ban Giám đốc IPCEC., JSC,\n\n" +
+                "Họ tên người liên hệ: " + name + "\n" +
+                "Số điện thoại / Zalo: " + phone + "\n" +
+                "Email: " + (email || "Không cung cấp") + "\n" +
+                "Lĩnh vực quan tâm: " + service + "\n" +
+                "Nội dung dự án: " + (note || "Trao đổi chi tiết qua điện thoại") + "\n";
+            const gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + TO + "&cc=" + CC + "&su=" + q(subject) + "&body=" + q(body);
+            const mailto = "mailto:" + TO + "?cc=" + CC + "&subject=" + q(subject) + "&body=" + q(body);
+            const box = document.getElementById("consultation-result");
+            box.innerHTML = `
+                <div class="font-bold text-navy-900 mb-1">✓ Đã tạo thư gửi Ban Giám đốc cho ${esc(name)}</div>
+                <p class="text-slate-700 mb-3">Thư đã được mở sẵn trong Gmail. Hãy bấm <strong>Gửi</strong> để hoàn tất. Nếu chưa thấy, chọn một cách bên dưới:</p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="${gmail}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-navy-900 text-white font-bold text-xs">Mở Gmail</a>
+                    <a href="${mailto}" class="px-3.5 py-2 rounded-lg bg-slate-200 text-navy-900 font-bold text-xs">Mở ứng dụng Email</a>
+                    <a href="https://zalo.me/0988552468" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-teal-600 text-white font-bold text-xs">Nhắn Zalo 0988 552 468</a>
+                </div>`;
+            box.classList.remove("hidden");
+            window.open(gmail, "_blank", "noopener");
+            e.target.reset();
         }
 
         window.addEventListener("DOMContentLoaded", loadAppData);
